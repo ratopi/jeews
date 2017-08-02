@@ -1,0 +1,36 @@
+<html>
+<body>
+JEEWS 1
+<script>
+
+	console.log( "starting" );
+
+	var echoSocket = new WebSocket( "ws://localhost:8080/jeews-0.1-SNAPSHOT/echo" );
+
+	echoSocket.onopen = function ( event )
+	{
+		console.log( "onopen" );
+		sendSome();
+	};
+
+	echoSocket.onmessage = function ( event )
+	{
+		console.log( "< " + event.data );
+	};
+
+	echoSocket.onerror = function ( event )
+	{
+		console.log( event );
+	};
+
+	var sendSome = function ()
+	{
+		var text = "Here's some text that the server is urgently awaiting! " + new Date().getTime();
+		console.log( "> " + text );
+		echoSocket.send( text );
+		window.setTimeout( sendSome, 5000 );
+	};
+
+</script>
+</body>
+</html>
